@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+service TodoService {
+  rpc AddTodo (TodoRequest) returns (TodoResponse);
+  rpc ListTodos (Empty) returns (TodoList);
+}
+
+message TodoRequest {
+  string task = 1;
+}
+
+message TodoResponse {
+  string message = 1;
+}
+
+message Empty {}
+
+message Todo {
+  int32 id = 1;          // Prisma auto-increment ID
+  string task = 2;       // Task text
+  string createdAt = 3;  // Date stored as string/ISO
+}
+
+message TodoList {
+  repeated Todo tasks = 1;  // 👈 array of Todo objects
+}

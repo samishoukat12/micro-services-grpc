@@ -1,0 +1,23 @@
+{
+  "name": "grpc-todo-demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "prisma": "prisma migrate dev --name init",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.13.4",
+    "@grpc/proto-loader": "^0.8.0",
+    "@prisma/client": "^6.15.0",
+    "nodemon": "^3.1.10",
+    "prisma": "^6.15.0"
+  }
+}
