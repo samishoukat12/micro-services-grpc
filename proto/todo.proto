@@ -5,6 +5,7 @@ service TodoService {
   rpc ListTodos (Empty) returns (TodoList);
   rpc UpdateTodo (UpdateTodoRequest) returns (UpdateTodoResponse);
   rpc DeleteTodo (DeleteTodoRequest) returns (DeleteTodoResponse);
+  rpc SingleTask (SingleTaskRequest) returns (SingleTaskResponse);
 }
 
 message TodoRequest {
@@ -35,6 +36,19 @@ message DeleteTodoRequest {
 
 message DeleteTodoResponse {
   string message = 1;
+}
+
+message SingleTaskRequest {
+  int32 id = 1;
+}
+
+message SingleTaskResponse {
+  int32 id = 1;
+  string task = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+  string message = 5;  
+  int32 status = 6;
 }
 
 message Empty {}

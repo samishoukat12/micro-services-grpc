@@ -60,8 +60,29 @@ const TodoServices = {
             };
             callback(null, response);
         }
+    },
+    SingleTask: async (call, callback) => {
+        const task = await prisma.task.findFirst({
+            where: {
+                id: call.request.id
+            }
+        })
+        if (!task) {
+            callback(null, { message: `Task not found with id: ${call.request.id}`, status: 404 })
+            return;
+        }
+        else {
+             const response = {
+                id: task.id,
+                task: task.task,
+                createdAt: task.createdAt.toISOString(),
+                updatedAt: new Date().toISOString(), // Prisma won't auto-update unless you have updatedAt column
+                message: "Task updated successfully",
+                status: 200
+            };
+            callback(null, response)
+        }
     }
-
 }
 
 export default TodoServices
