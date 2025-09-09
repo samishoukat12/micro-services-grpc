@@ -14,10 +14,15 @@ const TodoServices = {
     },
 
     ListTodos: async (call, callback) => {
-        const tasks = await prisma.task.findMany();
-        console.log(tasks)
-        callback(null, {tasks});
+        try {
+            const tasks = await prisma.task.findMany();
+            callback(null, { tasks });
+        } catch (err) {
+            callback(err, null);
+        }
     },
+
+
     DeleteTodo: async (call, callback) => {
         await prisma.task.delete({
             where: {
@@ -27,7 +32,7 @@ const TodoServices = {
         callback(null, { message: `Task deleted: ${call.request.id}` });
     },
     UpdateTodo: async (call, callback) => {
-        await prisma.task.update({
+        const updatedTask = await prisma.task.update({
             where: {
                 id: call.request.id,
             },
@@ -35,7 +40,13 @@ const TodoServices = {
                 task: call.request.task,
             }
         })
-        callback(null, { message: `Task updated: ${call.request.id}` });
+        const response = {
+            id: updatedTask.id,
+            task: updatedTask.task,
+            createdAt: updatedTask.createdAt.toISOString(),
+            updatedAt: new Date().toISOString(), // Prisma won't auto-update unless you have updatedAt column
+        };
+        callback(null, response);
     }
 
 }

@@ -3,6 +3,7 @@ syntax = "proto3";
 service TodoService {
   rpc AddTodo (TodoRequest) returns (TodoResponse);
   rpc ListTodos (Empty) returns (TodoList);
+  rpc UpdateTodo (UpdateTodoRequest) returns (UpdateTodoResponse);
 }
 
 message TodoRequest {
@@ -13,14 +14,26 @@ message TodoResponse {
   string message = 1;
 }
 
+message UpdateTodoRequest {
+  int32 id = 1;
+  string task = 2; 
+}
+
+message UpdateTodoResponse {
+  int32 id = 1;
+  string task = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+}
+
 message Empty {}
 
 message Todo {
-  int32 id = 1;          // Prisma auto-increment ID
-  string task = 2;       // Task text
-  string createdAt = 3;  // Date stored as string/ISO
+  int32 id = 1;
+  string task = 2;
+  string createdAt = 3;
 }
 
 message TodoList {
-  repeated Todo tasks = 1;  // 👈 array of Todo objects
+  repeated Todo tasks = 1;   // 👈 array of objects, not strings
 }
